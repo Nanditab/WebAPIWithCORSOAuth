@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "ProductList";
+}
+<div class="card">
+    <div class="card-header">
+        <h2>Products from WebAPI</h2>
+        <div>
+            Product ID: <input type="text" id="ID" />
+           Title: <input type="text" id="Title" />
+            Description : <input type="text" id="Desc" />
+            <input type="button" value="Get" onclick="GetProductById()" />
+            <input type="button" value="Update" onclick="UpdateProduct()"/>
+        </div>
+    </div>    
+    <div class="card-body">
+        <table id="ProductList" class="table table-bordered" >
+            <tr class="table-primary">
+                <th>
+                    ID
+                </th>
+                <th> Title</th>
+                <th>Description</th>
+            </tr>    
+            <tr id="dataRows"></tr>
+            </table>
+        </div>
+    </div>
+
+<script>
+    var apiUrl = "http://localhost:49728/api/products";
+    $(function(){
+        GetProducts();
+    });
+    function GetProducts() {
+        $("#ProductList").find("tr:gt(0)").remove();
+        $.get(apiUrl, function (data) {
+            $.each(data, function (key, value) {
+               
+                $("#ProductList").append(
+                    "<tr><td> " + value.ProductID + "</td><td>" + value.Title + "</td><td>" + value.Description + "</td></tr>");
+            })
+        }).
+            fail(function (jqXHR, texstatus) {
+                alert(jqXHR.statusText);
+            });
+    }
+    function GetProductById() {
+        var id = $("#ID").val();
+        $.get(apiUrl + "/" + id, function (data) {
+            $("#Title").val(data.Title);
+            $("#Desc").val(data.Description);
+        }).fail(function (jqXHR, status) {
+            $("#Title").val = jqXHR.responseText;
+        });
+       
+    }
+    function UpdateProduct() {
+        var data = {
+            ProductID: $("#ID").val(),
+            Title: $("#Title").val(),
+            Description: $("#Desc").val()
+        }
+        $.ajax({
+            url: apiUrl,
+            method: "PUT",
+            data: JSON.stringify(data),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+            //,
+            //beforeSend: function (jqXHR) {
+            //    jqXHR.setRequestHeader("CORS", "AnyValue1");
+            //    jqXHR.setRequestHeader("Anything","Value2");
+            //}
+        }).done(function (data) {
+                GetProducts();
+            }).fail(function (jqXHR, status) {
+                alert('fail')
+                    $("#Title").text(jqXHR.responseText);
+                })
+
+    }
+</script>
+

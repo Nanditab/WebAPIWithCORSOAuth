@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h2>Register</h2>
+    <div>
+        User Name: <input type="text" id="RegUserName" />
+        Password: <input type="password" id="RegPassword" />
+        ConfirmPassword : <input type="password" id="ConfirmPassword" />
+        <input type="button" value="Register" onclick="Register()" />
+    </div>
+</div>
+    <div class="card-body">
+        <div class="bg-light">
+            <div>
+                <h2>Login</h2>
+            </div>
+                <div>
+                    User Name: <input type="text" id="UserName" />
+                    Password: <input type="password" id="Password" />
+                    <input type="button" value="Login" onclick="Login()" />
+                </div>
+            </div>
+        <div class="card-deck mt-2">            
+            <div><h2>Product with price</h2><input type="button" class="btn btn-danger" value="Get" onclick="GetProductsWithPrice()" /></div>
+            <table id="ProductList" class="table table-bordered">
+                <tr class="table-primary">
+                    <th>
+                        ID
+                    </th>
+                    <th> Title</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Discount</th>
+                </tr>
+                <tr id="dataRows"></tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+<script >
+    var apiAccountUrl = "http://localhost:49728/api/account";
+    function Register() {
+        var userModel = {
+            UserName : $("#RegUserName").val(),
+            Password : $("#RegPassword").val(),
+            ConfirmPassword : $("#ConfirmPassword").val()
+        }
+        $.ajax({
+            url: apiAccountUrl + "/register",
+            method: "PUT",
+            data: JSON.stringify(userModel),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            success: function () {
+                alert("Done")
+            }
+        }).fail(function (jqXHR, status) {
+            alert(jqXHR.responseText);
+        });
+    }
+    function GetProductsWithPrice() {
+        var apiProduct = "http://localhost:49728/api/ProductWithPrice"
+        $("#ProductList").find("tr:gt(0)").remove();
+        $.get(apiProduct, function (data) {
+            $.each(data, function (key, value) {
+
+                $("#ProductList").append(
+                    "<tr><td> " + value.ProductID + "</td><td>" + value.Title + "</td><td>" + value.Description + "</td></tr>");
+            })
+        }).
+            fail(function (jqXHR, texstatus) {
+                alert(jqXHR.statusText);
+            });
+    }
+    function Login() {
+        var loginData = "grant_type=password&username=" + $("#UserName").val() + "&password=" + $("#Password").val();           
+        var tokenUrl = "http://localhost:49728/token"
+        $.ajax({
+            url: tokenUrl,
+            method: "POST",
+            header: {
+                "Accept":"application/json",
+                "Content-Type":"application/x-www-form-urlencoded"
+            },
+            data: loginData
+        }).done(function(result){
+                alert('OK');
+            }).fail(function (jqXHR, status) {
+                alert(jqXHR.responseText);
+            })
+    }
+</script>
+
