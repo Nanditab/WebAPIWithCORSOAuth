@@ -20,7 +20,10 @@ namespace ProductService.Provider
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            context.OwinContext.Request.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+            var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
+            if (allowedOrigin == null) allowedOrigin = "*";
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
+
             IdentityRepository repo = new IdentityRepository();
             var user = repo.FindUser(context.UserName, context.Password);
             if(user == null)

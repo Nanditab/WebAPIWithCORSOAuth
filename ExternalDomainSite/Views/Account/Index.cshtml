@@ -80,21 +80,33 @@
             });
     }
     function Login() {
-        var loginData = "grant_type=password&username=" + $("#UserName").val() + "&password=" + $("#Password").val();           
+        var loginData = {//"grant_type=password&username=" + $("#UserName").val() + "&password=" + $("#Password").val();           
+            grant_type: "password",
+            username: $("#UserName").val(),
+            password: $("#Password").val()
+        }
         var tokenUrl = "http://localhost:49728/token"
         $.ajax({
             url: tokenUrl,
             method: "POST",
             header: {
-                "Accept":"application/json",
-                "Content-Type":"application/x-www-form-urlencoded"
+                "Accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded"
             },
-            data: loginData
-        }).done(function(result){
-                alert('OK');
-            }).fail(function (jqXHR, status) {
-                alert(jqXHR.responseText);
-            })
+            data: loginData,
+            complete: function (result) {
+                alert('com' + result);
+            },
+            success: function (result) {
+                //set access tocken in storage
+                sessionStorage.setItem("accessToken", result.access_token);
+            },
+            error: function (result, token,x) {
+                alert( "error" + result);
+                alert("token" + token);
+         }
+        });
+            
     }
 </script>
 
