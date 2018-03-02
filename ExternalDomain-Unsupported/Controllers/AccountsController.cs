@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ExternalDomainSite.Controllers
+namespace ExternalDomain_Unsupported.Controllers
 {
-    public class AccountController : Controller
+    public class AccountsController : Controller
     {
-        // GET: Account
+        // GET: Accounts
         public ActionResult Index()
         {
             return View();

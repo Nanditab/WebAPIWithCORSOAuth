@@ -5,11 +5,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace ProductService.Controllers
 {   
     [Authorize]
-
+    [EnableCors(origins:"http://localhost:54726",headers:"*",methods:"*")]
     public class ProductWithPriceController : ApiController
     {
         #region -- Properties --

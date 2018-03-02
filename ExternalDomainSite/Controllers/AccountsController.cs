@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace ExternalDomainSite.Controllers
 {
-    public class TestOAuthController : Controller
+    public class AccountsController : Controller
     {
-        // GET: TestOAuth
+        // GET: Account
         public ActionResult Index()
         {
             return View();

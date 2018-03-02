@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalDomainSite-Supporte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalDomain-Unsupported", "ExternalDomain-Unsupported\ExternalDomain-Unsupported.csproj", "{F405CBB8-0F69-4175-A243-41349D2DCE17}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{C90AF7F3-F35E-48DB-B655-AAE7DE8A598D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,7 +39,6 @@ Global
 		{72F680EB-2806-4C0E-80CA-595E51BF5A9E} = {FCFA3BCB-C47C-4493-B9A1-2D85642860F4}
 		{EB466FBA-A084-4E41-850E-3F724822055B} = {BDE108F8-12D1-4EBF-A7B6-A2BB0F856C89}
 		{F405CBB8-0F69-4175-A243-41349D2DCE17} = {BDE108F8-12D1-4EBF-A7B6-A2BB0F856C89}
-		{C90AF7F3-F35E-48DB-B655-AAE7DE8A598D} = {FCFA3BCB-C47C-4493-B9A1-2D85642860F4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E26B0E01-39B8-411B-9BAC-EA9614B11590}

@@ -14,8 +14,8 @@ namespace ProductService
         public static void Register(HttpConfiguration config)
         {
             //// Web API configuration and services
-           var corsSetting = new EnableCorsAttribute(origins:"*", headers: "*", methods: "OPTIONS");
-            config.EnableCors(corsSetting);
+         //  var corsSetting = new EnableCorsAttribute(origins:"*", headers: "*", methods: "OPTIONS");
+            config.EnableCors();
             config.Filters.Add(new ProductExceptionFilter());
             config.Services.Add(typeof(IExceptionLogger), new TraceLogger(new System.Diagnostics.TraceSource("APISource", System.Diagnostics.SourceLevels.All)));
             config.Services.Replace(typeof(IExceptionHandler), new ProductExceptionHandler());

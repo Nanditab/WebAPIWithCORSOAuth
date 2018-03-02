@@ -12,22 +12,44 @@ namespace ProductService.Provider
 {
     public class oAuthProvider : OAuthAuthorizationServerProvider
     {
-        public override  Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
+        public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
+            //todo check for clientid and secret
+            //   context.OwinContext.Set<string>("as:clientRefreshTokenLifeTime", client.RefreshTokenLifeTime.ToString());
+            //my filmsy security check
+            var tokenPath = context.OwinContext.Request.Path.ToString();
+            if (string.Compare(tokenPath, "/token", true) == 0)
+            {
+                //need to be in model class
+                var SupportedClients = new List<string>
+            {
+               "http://localhost:54726"
+            };
+
+                if (!SupportedClients.Contains(context.OwinContext.Request.Headers.Get("Origin")))
+                {
+                    context.SetError("Clinet not supported");
+                    return Task.FromResult<object>(null);
+                }
+            }
+
             context.Validated();
             return Task.FromResult<object>(null);
         }
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-          //  var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
-          //  if (allowedOrigin == null) allowedOrigin = "*";
-          //  context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
-          ////  context.OwinContext.Response.Headers.Add("Access - Control - Allow - Methods", new[] { allowedOrigin });
-            
+
+            var tokenPath = context.OwinContext.Request.Path.ToString();
+            if (string.Compare(tokenPath, "/token", true) == 0)
+            {
+                context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "http://localhost:54726" });
+
+            }
+
             IdentityRepository repo = new IdentityRepository();
             var user = repo.FindUser(context.UserName, context.Password);
-            if(user == null)
+            if (user == null)
             {
                 context.SetError("ivalid_grant", "User couldnt be authentocated");
                 return;
