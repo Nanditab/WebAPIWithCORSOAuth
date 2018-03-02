@@ -9,6 +9,7 @@ It has three component
 
 # Service API
 CORS Example
+
 | API URI | External Site - Supported |  External Site - Unsupported | Comments
 | --- | --- | --- | --- |
 | GetProducts() ->`http://localhost:49728/api/products` | Yes | Yes | All origin request allowed |
