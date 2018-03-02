@@ -8,8 +8,14 @@ It has three component
 3. External Site Unsupported - Web site which WebAPI doesnt support. [http://localhost:63898/]
 
 # Service API
+CORS Example
 | API URI | External Site - Supported |  External Site - Unsupported | Comments
 | --- | --- | --- | --- |
-| `http://localhost:49728/api/products` | Yes | Yes | All origin request allowed |
-| http://localhost:49728/api/products/1` | Yes | Yes | All origin request allowed |
-| http://localhost:49728/api/products` | Yes | Yes | All origin request allowed |
+| GetProducts() ->`http://localhost:49728/api/products` | Yes | Yes | All origin request allowed |
+|GetProductById -> http://localhost:49728/api/products/1` | Yes | Yes | All origin request allowed |
+|PutProduct -> Update on website` | Yes  | NO | Only allowed for supported website |
+
+Security
+| API URI | External Site - Supported |  External Site - Unsupported | Comments
+| --- | --- | --- | --- |
+| GetProducts() ->`http://localhost:49728/api/products` | Yes | No | Need Authorization Cookie. |
