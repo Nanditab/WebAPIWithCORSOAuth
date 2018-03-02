@@ -7,10 +7,12 @@
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Web;
     using System.Web.Http;
     using System.Web.Http.Cors;
     #endregion
     [RoutePrefix("api/Products")]
+    [EnableCors("*","*","GET,OPTIONS")]
     public class ProductsController : ApiController
     {
         #region -- Properties --
@@ -28,6 +30,18 @@
                 new Product{ ProductID=4, Title = "Google Pixel 2XL", Description = " features a smart camera, fast-charging battery and the Google Assistant built-in."},
 
             };
+        }
+
+        public ProductsController()
+        {
+            //code to set allow origin in response object
+            //if (string.Compare(HttpContext.Current.Request.HttpMethod, "OPTIONS", true) == 0)
+            //{
+            //    HttpContext.Current.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:54726/");
+            //    HttpContext.Current.Response.AddHeader("Access-Control-Allow-Methods", "PUT");
+            //    HttpContext.Current.Response.AddHeader("Access-Control-Allow-Headers", "*");
+            //   // HttpContext.Current.Response.End();
+            //}
         }
         #endregion
 
@@ -48,7 +62,8 @@
             return Ok(product);
         }
 
-        [HttpPost]
+        [HttpPut]
+        [EnableCors(origins: "http://localhost:54726", headers:"*",methods:"PUT")]
         public IHttpActionResult PutProduct(Product toUpdate)
         {
             if(!ModelState.IsValid)

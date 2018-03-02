@@ -25,7 +25,6 @@ namespace ProductService
             //set up auth settings
             ConfigureoAuth(app);
             WebApiConfig.Register(config);
-            app.UseCors(CorsOptions.AllowAll);
             app.UseWebApi(config);
             config.Formatters.JsonFormatter.MediaTypeMappings.Add(new RequestHeaderMapping("Accept", "text/html", StringComparison.InvariantCultureIgnoreCase, true, "application/json"));
         }
@@ -35,8 +34,6 @@ namespace ProductService
             OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
             OAuthAuthorizationServerOptions oAuthServer = new OAuthAuthorizationServerOptions()
             {
-
-
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(60),               
@@ -47,6 +44,7 @@ namespace ProductService
             app.UseOAuthAuthorizationServer(oAuthServer);
             app.UseOAuthBearerAuthentication(OAuthBearerOptions);
         }
+
     }
 
     

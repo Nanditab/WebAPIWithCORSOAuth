@@ -1,42 +1,43 @@
 ﻿
 @{
-    ViewBag.Title = "ProductList- Supported Site";
+    ViewBag.Title = "Product List- Unsupported Site";
 }
+
 <div class="card">
     <div class="card-header">
-        <h2>Products from WebAPI - This is supported site</h2>
+        <h2>Products from WebAPI - This is Unsupported domain</h2>
         <div>
             Product ID: <input type="text" id="ID" />
-           Title: <input type="text" id="Title" />
+            Title: <input type="text" id="Title" />
             Description : <input type="text" id="Desc" />
             <input type="button" value="Get" onclick="GetProductById()" />
-            <input type="button" value="Update" onclick="UpdateProduct()"/>
+            <input type="button" value="Update" onclick="UpdateProduct()" />
         </div>
-    </div>    
+    </div>
     <div class="card-body">
-        <table id="ProductList" class="table table-bordered" >
+        <table id="ProductList" class="table table-bordered">
             <tr class="table-primary">
                 <th>
                     ID
                 </th>
                 <th> Title</th>
                 <th>Description</th>
-            </tr>    
+            </tr>
             <tr id="dataRows"></tr>
-            </table>
-        </div>
+        </table>
     </div>
-
-<script>
+</div>
+<script type="text/javascript">
     var apiUrl = "http://localhost:49728/api/products";
-    $(function(){
+    $(function () {
         GetProducts();
     });
+
     function GetProducts() {
         $("#ProductList").find("tr:gt(0)").remove();
         $.get(apiUrl, function (data) {
             $.each(data, function (key, value) {
-               
+
                 $("#ProductList").append(
                     "<tr><td> " + value.ProductID + "</td><td>" + value.Title + "</td><td>" + value.Description + "</td></tr>");
             })
@@ -53,7 +54,7 @@
         }).fail(function (jqXHR, status) {
             $("#Title").val = jqXHR.responseText;
         });
-       
+
     }
     function UpdateProduct() {
         var data = {
@@ -66,17 +67,15 @@
             method: "PUT",
             data: JSON.stringify(data),
             headers: {
-               
+
                 "Content-Type": "application/json"
-            }
-            
+            }           
         }).done(function (data) {
-                GetProducts();
-            }).fail(function (jqXHR, status) {
-                alert('fail')
-                    $("#Title").text(jqXHR.responseText);
-                })
+            GetProducts();
+        }).fail(function (jqXHR, status) {
+            alert('fail')
+            $("#Title").text(jqXHR.responseText);
+        })
 
     }
 </script>
-
